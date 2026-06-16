@@ -10,6 +10,6 @@ namespace GemMangement.DAL.Models
     {
         public int Id {  get; set; }
         public DateTime CreatedAt {  get; set; }
-        public DateTime UpDateedAt { get; set; }
+        public DateTime? UpDateedAt { get; set; }
     }
 }

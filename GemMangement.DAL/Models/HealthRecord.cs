@@ -13,5 +13,8 @@ namespace GemMangement.DAL.Models
         public string BloodType {  get; set; }
         public string? Note {  get; set; }
 
+        public Member Member { get; set; }
+        public int Memberid {  get; set; }
+
     }
 }

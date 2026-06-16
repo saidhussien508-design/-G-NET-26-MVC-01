@@ -1,4 +1,5 @@
-﻿using GemMangement.Models;
+﻿using GemMangement.DAL.Models;
+using GemMangement.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -16,7 +17,13 @@ namespace GemMangement.Pl.Dbcontext
         //}
 
         public DbSet<plane> planes { get; set; }
-
+        public DbSet<Booking> bookings { get; set; }
+        public DbSet<Category> categories { get; set; }
+        public DbSet<HealthRecord> HealthRecords { get; set; }
+        public DbSet<Member> members { get; set; }
+        public DbSet<MemberShip> memberShips { get; set; }
+        public DbSet<Session> sessions { get; set; }
+        public DbSet<Trainer> trainers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

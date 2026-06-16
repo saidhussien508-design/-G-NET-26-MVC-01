@@ -12,5 +12,14 @@ namespace GemMangement.DAL.Models
         public int  Capacity {  get; set; }
         public DateTime StartDate {  get; set; }    
         public DateTime EndDate {  get; set; }
+
+        public Trainer Trainer { get; set; }    
+        public int Trainerid {  get; set; }
+
+        public Category Category { get; set; }  
+        public int Categoryid { get; set; }
+
+
+        public ICollection<Booking> bookings {  get; set; }
     }
 }

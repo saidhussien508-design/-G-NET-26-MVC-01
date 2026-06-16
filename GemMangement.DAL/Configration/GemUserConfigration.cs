@@ -24,9 +24,9 @@ namespace GemMangement.DAL.Configration
             builder.OwnsOne(s => s.Address, a =>
             {
                 a.Property(o => o.City).HasColumnName("City").
-                HasColumnType("varchar");
+                HasColumnType("varchar").HasMaxLength(200);
                 a.Property(o => o.Street).HasColumnName("street").
-                HasColumnType("varchar");
+                HasColumnType("varchar").HasMaxLength(200);
                 a.Property(o => o.BuildingNumber).HasColumnName("BuildingNumber");
             });
 
@@ -35,7 +35,7 @@ namespace GemMangement.DAL.Configration
                 tb.HasCheckConstraint("EmailCheak", "Email Like'_%@_%_%'");
                 tb.HasCheckConstraint("PhoneCheak",
                     "phone like '010%' or phone like '011%'or phone like '012%' or phone like '015%'");
-            })
+            });
         }
     }
 }

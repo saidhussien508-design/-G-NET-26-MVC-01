@@ -1,5 +1,6 @@
 ﻿using GemMangement.DAL.Reposatours.Classes;
 using GemMangement.DAL.Reposatours.Interfasses;
+using GemMangement.Models;
 using GemMangement.Pl.Dbcontext;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,8 +11,8 @@ namespace GemMangement.Controllers
     {
         //private readonly GemAppDpContext _Context=new GemAppDpContext();
 
-        private readonly IplanReposatory _iplanReposatory;
-        public PlansController(IplanReposatory planReposatory)
+        private readonly IGenaricRepository<plane> _iplanReposatory;
+        public PlansController(IGenaricRepository<plane> planReposatory)
         {
             _iplanReposatory = planReposatory;
         }

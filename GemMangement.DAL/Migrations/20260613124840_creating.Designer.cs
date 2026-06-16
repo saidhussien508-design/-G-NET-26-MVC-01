@@ -4,6 +4,7 @@ using GemMangement.Pl.Dbcontext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GemMangement.DAL.Migrations
 {
     [DbContext(typeof(GemAppDpContext))]
-    partial class GemAppDpContextModelSnapshot : ModelSnapshot
+    [Migration("20260613124840_creating")]
+    partial class creating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +42,7 @@ namespace GemMangement.DAL.Migrations
                     b.Property<bool>("IsAttneded")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("UpDateedAt")
+                    b.Property<DateTime>("UpDateedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Sessionid", "Memberid");
@@ -65,7 +68,7 @@ namespace GemMangement.DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("UpDateedAt")
+                    b.Property<DateTime>("UpDateedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -77,31 +80,36 @@ namespace GemMangement.DAL.Migrations
                         {
                             Id = 1,
                             CaregoryNAme = "Cardio",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpDateedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
                             CaregoryNAme = "strength",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpDateedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 3,
                             CaregoryNAme = "yoga",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpDateedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 4,
                             CaregoryNAme = "Boxing",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpDateedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 5,
                             CaregoryNAme = "crossfit",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpDateedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -129,7 +137,7 @@ namespace GemMangement.DAL.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpDateedAt")
+                    b.Property<DateTime>("UpDateedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Weight")
@@ -154,7 +162,7 @@ namespace GemMangement.DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasColumnName("JoinDate")
+                        .HasColumnName("StartDate")
                         .HasDefaultValueSql("GETDATE()");
 
                     b.Property<DateOnly>("DateOfBirth")
@@ -173,7 +181,7 @@ namespace GemMangement.DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar");
 
-                    b.Property<DateTime?>("UpDateedAt")
+                    b.Property<DateTime>("UpDateedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("phone")
@@ -209,15 +217,12 @@ namespace GemMangement.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("StartDate")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("UpDateedAt")
+                    b.Property<DateTime>("UpDateedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("memberid")
@@ -265,7 +270,7 @@ namespace GemMangement.DAL.Migrations
                     b.Property<int>("Trainerid")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UpDateedAt")
+                    b.Property<DateTime>("UpDateedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -312,7 +317,7 @@ namespace GemMangement.DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar");
 
-                    b.Property<DateTime?>("UpDateedAt")
+                    b.Property<DateTime>("UpDateedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("phone")
@@ -374,7 +379,7 @@ namespace GemMangement.DAL.Migrations
                         .HasPrecision(10, 3)
                         .HasColumnType("decimal(10,3)");
 
-                    b.Property<DateTime?>("UpDateedAt")
+                    b.Property<DateTime>("UpDateedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -428,13 +433,11 @@ namespace GemMangement.DAL.Migrations
 
                             b1.Property<string>("City")
                                 .IsRequired()
-                                .HasMaxLength(200)
                                 .HasColumnType("varchar")
                                 .HasColumnName("City");
 
                             b1.Property<string>("Street")
                                 .IsRequired()
-                                .HasMaxLength(200)
                                 .HasColumnType("varchar")
                                 .HasColumnName("street");
 
@@ -501,13 +504,11 @@ namespace GemMangement.DAL.Migrations
 
                             b1.Property<string>("City")
                                 .IsRequired()
-                                .HasMaxLength(200)
                                 .HasColumnType("varchar")
                                 .HasColumnName("City");
 
                             b1.Property<string>("Street")
                                 .IsRequired()
-                                .HasMaxLength(200)
                                 .HasColumnType("varchar")
                                 .HasColumnName("street");
 

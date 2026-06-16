@@ -20,7 +20,7 @@ namespace GemMangement.Configration
             builder.Property(s => s.Price)
                 .HasPrecision(10, 3);
 
-            builder.Property(s => s.CreateAt).
+            builder.Property(s => s.CreatedAt).
                 HasDefaultValueSql("GETDATE()");
 
             builder.ToTable(s => s.HasCheckConstraint("planDuration", "DurationDate Between 1 and 365"));

@@ -11,4 +11,8 @@
     <ProjectReference Include="..\GemMangement.DAL\GemMangement.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="ViewModel\member\HealthyRecordViewModel.cs" />
+  </ItemGroup>
+
 </Project>

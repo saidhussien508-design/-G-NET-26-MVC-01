@@ -1,6 +1,8 @@
 using GemMangement.DAL.Reposatours.Classes;
 using GemMangement.DAL.Reposatours.Interfasses;
 using GemMangement.Pl.Dbcontext;
+using GemMangement_AL_.Servicess.Classes;
+using GemMangement_AL_.Servicess.Interfases;
 using Microsoft.EntityFrameworkCore;
 
 namespace GemMangement
@@ -14,21 +16,14 @@ namespace GemMangement
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddScoped<IplanReposatory,PlanRepository>();
-
+           // builder.Services.AddScoped<IplanReposatory,PlanRepository>();
+           builder.Services.AddScoped(typeof(IGenaricRepository<>),typeof(GenaricRepository<>));
             builder.Services.AddScoped<GemAppDpContext>();
 
             builder.Services.AddDbContext<GemAppDpContext>(option => {
                 option.UseSqlServer(builder.Configuration.GetConnectionString("Defultconnection"));
                 });
-
-
-
-
-
-
-
-
+            builder.Services.AddScoped<ImemberServises, MemeberServices>();
 
             var app = builder.Build();
 

@@ -2,7 +2,9 @@
 using GemMangement.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +18,7 @@ namespace GemMangement.DAL.Reposatours.Interfasses
 
         Task<int> UpDateAsync(TEntity entity, CancellationToken ct = default);
         Task<int> DeleteAsync(TEntity entity, CancellationToken ct = default);
-
+        Task<bool> AnyAsync(Expression<Func<TEntity,bool>>predicate,CancellationToken ct);
+        Task<TEntity?>Firstordefultacync(Expression<Func<TEntity, bool>> predicate, CancellationToken ct);
     }
 }

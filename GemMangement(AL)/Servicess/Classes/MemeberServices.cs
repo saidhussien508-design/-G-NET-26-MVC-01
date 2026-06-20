@@ -14,10 +14,21 @@ namespace GemMangement_AL_.Servicess.Classes
     {
         private readonly IGenaricRepository<Member> _memberRepository;
 
-        public MemeberServices(IGenaricRepository<Member> memberRepository)
+        public IGenaricRepository<MemberShip> _Membershiprepository;
+        private readonly IGenaricRepository<HealthRecord> _healtyrecordrepository;
+        private readonly IGenaricRepository<Booking> _bookingrepository;
+
+        public MemeberServices(IGenaricRepository<Member> memberRepository,
+            IGenaricRepository<MemberShip> membershiprepository,
+            IGenaricRepository<HealthRecord> healtyrecordrepository,
+            IGenaricRepository<Booking>bookingrepository)
         {
             _memberRepository = memberRepository;
+            _Membershiprepository = membershiprepository;
+            _healtyrecordrepository = healtyrecordrepository;
+            _bookingrepository = bookingrepository;
         }
+        
         public async Task<IEnumerable<MemberViewModel>> GetAllMemberAsync(CancellationToken ct)
         {
             var member = await _memberRepository.GetallAsync(ct: ct);
@@ -52,33 +63,138 @@ namespace GemMangement_AL_.Servicess.Classes
             });
             return ViewModel;
         }
-         public Task<MemberViewModel?> GetMemberDetails(CancellationToken ct)
+        public async Task<MemberViewModel?> GetMemberDetails(int memberid, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var member = await _memberRepository.GetByIdAsync(memberid, ct);
+            if (member is null) return null;
+            var membermodel = new MemberViewModel()
+            {
+                Photo = member.photo,
+                Name = member.Name,
+                Email = member.Email,
+                Phone = member.phone,
+                Gender = member.Gender.ToString(),
+                DateOfBirth = member.DateOfBirth.ToString(),
+                Address = $"{member.Address.BuildingNumber}-{member.Address.Street}-{member.Address.City}"
+            };
+            var activemembership = await _Membershiprepository.Firstordefultacync(s => s.memberid == memberid && s.EndDate > DateTime.UtcNow, ct);
+            if (activemembership is not null)
+
+            {
+                membermodel.Name = activemembership.plane.Name;
+                membermodel.MembershipStartDate = activemembership.CreatedAt.ToString();
+                membermodel.MembershipStartDate = activemembership.EndDate.ToString();
+            }
+            return membermodel;
+        }
+        public async Task<HealthyRecordViewModel> GetMemberHealtyRecord(int memberid, CancellationToken ct)
+        {
+          var result=await _healtyrecordrepository.Firstordefultacync(s =>s.Memberid== memberid, ct);
+            if (result is  null) return null;
+
+            var medule = new HealthyRecordViewModel()
+            {
+              weight=result.Weight,
+              height=result.Height, 
+              BloodType=result.BloodType,   
+              Note=result.Note,
+            };
+            return medule;
         }
 
-        public Task<HealthyRecordViewModel> GetMemberHealtyRecord(CancellationToken ct)
+        public async Task<MemberToUpdateViewModel> GetMemberToUpdateAsync(int MemberId, CancellationToken ct)
         {
-            throw new NotImplementedException();
+           var member=await _memberRepository.GetByIdAsync(MemberId, ct);
+            if (member is null) return null;
+            var model=new MemberToUpdateViewModel()
+            {
+                Email= member.Email,
+                Name= member.Name,
+                Phone=member.phone,
+                Photo=member.photo,
+                City=member.Address.City,
+                Street=member.Address.Street,
+                BuildingNumber=member.Address.BuildingNumber,
+
+            };
+            return model;
         }
 
-        public Task<MemberToUpdateViewModel> GetMemberToUpdateAsync(int MemberId, CancellationToken ct)
+        public async Task<bool> UpdatememberAsync(int MemberId, MemberToUpdateViewModel model, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var member = await _memberRepository.GetByIdAsync(MemberId, ct);
+            if (member is null) return false;
+
+            var PhoneExist = await _memberRepository.AnyAsync(s => s.phone == model.Phone&&s.Id!=MemberId, ct);
+            var EmailExist = await _memberRepository.AnyAsync(s => s.Email == model.Email&& s.Id!= MemberId, ct);
+
+            if (PhoneExist || EmailExist)
+            {
+                return false;
+            }
+
+            member.Email = model.Email;
+            member.phone=model.Phone;
+            member.Address.BuildingNumber = model.BuildingNumber;
+            member.Address.Street = model.Street;
+            member.Address.City = model.City;
+
+            var count = await _memberRepository.UpDateAsync(member);
+            return count > 0;
+        }
+        public async Task<bool> CreatmemberAsync(CreateMemberViewModel model, CancellationToken ct)
+        {
+           var PhoneExist=await _memberRepository.AnyAsync(s=>s.phone==model.Phone, ct) ;
+            var EmailExist = await _memberRepository.AnyAsync(s => s.Email == model.Email, ct);
+
+            if (PhoneExist||EmailExist) 
+            { 
+                return false;
+            }
+            //casting from CreateMemberViewModel to member
+            var creatmember = new Member()
+            {
+                Name = model.Name,
+                Email = model.Email,
+                phone = model.Phone,
+                Gender = model.Gender,
+                Address = new Address()
+                {
+                    City = model.City,
+                    BuildingNumber = model.BuildingNumber,
+                    Street = model.Street,
+
+                },
+                HealthRecord = new HealthRecord()
+                {
+                    Weight=model.HealthRecordViewModel.weight,
+                    Height=model.HealthRecordViewModel.height,  
+                    BloodType=model.HealthRecordViewModel.BloodType,
+                    Note=model.HealthRecordViewModel.Note,
+
+
+                }
+
+
+            };
+           int count=await _memberRepository.AddAsync(creatmember,ct);
+            return count > 0;
         }
 
-        public Task<bool> UpdatememberAsync(int MemberId, MemberToUpdateViewModel model, CancellationToken ct)
+        public async Task<bool> DeletmemberAsync(int MemberId, CancellationToken ct)
         {
-            throw new NotImplementedException();
-        }
-        public Task<bool> CreatmemberAsync(CreateMemberViewModel model, CancellationToken ct)
-        {
-            throw new NotImplementedException();
+            var member = await _memberRepository.GetByIdAsync(MemberId, ct);
+            if (member is null) return false;
+
+            var HasFutherSession=await _bookingrepository.AnyAsync(s => s.Memberid == MemberId && s.Session.StartDate > DateTime.Now,ct);
+            if (HasFutherSession) return false;
+
+           var count=await _memberRepository.DeleteAsync(member, ct);
+            return count > 0;
+
         }
 
-        public Task<bool> DeletmemberAsync(int MemberId, CancellationToken ct)
-        {
-            throw new NotImplementedException();
+     
         }
     }
-}
+

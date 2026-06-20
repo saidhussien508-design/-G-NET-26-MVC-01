@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,16 @@ namespace GemMangement.DAL.Reposatours.Classes
         {
             _dpset.Remove(entity);
             return await _Context.SaveChangesAsync(ct);
+        }
+
+        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken ct)
+        {
+           return await _dpset.AnyAsync(predicate, ct);
+        }
+
+        public async Task<TEntity?> Firstordefultacync(Expression<Func<TEntity, bool>> predicate, CancellationToken ct)
+        {
+            return await _dpset.FirstOrDefaultAsync(predicate, ct);
         }
     }
 

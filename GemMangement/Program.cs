@@ -20,9 +20,10 @@ namespace GemMangement
            builder.Services.AddScoped(typeof(IGenaricRepository<>),typeof(GenaricRepository<>));
             builder.Services.AddScoped<GemAppDpContext>();
 
-            builder.Services.AddDbContext<GemAppDpContext>(option => {
+            builder.Services.AddDbContext<GemAppDpContext>(option =>
+            {
                 option.UseSqlServer(builder.Configuration.GetConnectionString("Defultconnection"));
-                });
+            });
             builder.Services.AddScoped<ImemberServises, MemeberServices>();
 
             var app = builder.Build();

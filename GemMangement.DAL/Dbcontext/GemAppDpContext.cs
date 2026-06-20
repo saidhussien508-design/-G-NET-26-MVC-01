@@ -7,7 +7,7 @@ namespace GemMangement.Pl.Dbcontext
 {
     public class GemAppDpContext:DbContext
     {
-        public GemAppDpContext(DbContextOptions<GemAppDpContext> option):base(option)
+        public GemAppDpContext(DbContextOptions<GemAppDpContext> option) : base(option)
         {
 
         }

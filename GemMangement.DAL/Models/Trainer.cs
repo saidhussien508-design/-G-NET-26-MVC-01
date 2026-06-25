@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GemMangement.DAL.Models
 {
-    public  class Trainer:GemUser
+    public  class Trainers:GemUser
     {
         public Specialties specialties {  get; set; } 
         public ICollection<Session> sessions { get; set; }

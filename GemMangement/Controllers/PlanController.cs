@@ -28,5 +28,10 @@ namespace GemMangement.Controllers
             if (plan is null)return RedirectToAction(nameof(Index));
              return View(plan);
         }
+        [HttpGet]
+        public IActionResult Edit()
+        {
+            return View();
+        }
     }
 }

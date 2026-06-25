@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace GemMangement.DAL.Reposatours.Classes
 {
-    public class GenaricRepository<TEntity> : IGenaricRepository<TEntity> where TEntity : BaseEntity, new()
+    public class GenaricRepository<TEntity> : IGenaricRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly GemAppDpContext _Context;
         private readonly DbSet<TEntity> _dpset;
@@ -30,20 +30,20 @@ namespace GemMangement.DAL.Reposatours.Classes
                      => _dpset.FirstOrDefaultAsync(s => s.Id == id, ct);
         
 
-        public async Task<int> AddAsync(TEntity entity, CancellationToken ct = default)
+        public void Add(TEntity entity)
         {
-            await _dpset.AddAsync(entity, ct);
-            return await _Context.SaveChangesAsync(ct);
+          _dpset.AddAsync(entity);
+           
         }
-        public async Task<int> UpDateAsync(TEntity entity, CancellationToken ct = default)
+        public void UpDatAsync(TEntity entity )
         {
             _dpset.Update(entity);
-            return await _Context.SaveChangesAsync(ct);
+         
         }
-        public async Task<int> DeleteAsync(TEntity entity, CancellationToken ct = default)
+        public void Delete(TEntity entity)
         {
             _dpset.Remove(entity);
-            return await _Context.SaveChangesAsync(ct);
+          
         }
 
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken ct)

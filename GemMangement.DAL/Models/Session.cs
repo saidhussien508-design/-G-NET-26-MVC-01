@@ -13,7 +13,7 @@ namespace GemMangement.DAL.Models
         public DateTime StartDate {  get; set; }    
         public DateTime EndDate {  get; set; }
 
-        public Trainer Trainer { get; set; }    
+        public Trainers Trainer { get; set; }    
         public int Trainerid {  get; set; }
 
         public Category Category { get; set; }  

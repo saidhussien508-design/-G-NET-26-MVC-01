@@ -1,6 +1,8 @@
+using GemMangement.DAL;
 using GemMangement.DAL.Reposatours.Classes;
 using GemMangement.DAL.Reposatours.Interfasses;
 using GemMangement.Pl.Dbcontext;
+using GemMangement_AL_;
 using GemMangement_AL_.Servicess.Classes;
 using GemMangement_AL_.Servicess.Interfases;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +21,10 @@ namespace GemMangement
            // builder.Services.AddScoped<IplanReposatory,PlanRepository>();
            builder.Services.AddScoped(typeof(IGenaricRepository<>),typeof(GenaricRepository<>));
             builder.Services.AddScoped<GemAppDpContext>();
-
+            builder .Services.AddScoped<IuniteOfWork,Uniteofwork>();
+            builder .Services.AddScoped<IsessionRepository,SessionRepository>();
+            builder.Services.AddScoped<IsessionServesises, SessionServieses>();
+            builder.Services.AddAutoMapper(s => s.AddProfile(new MappingProfile()));
             builder.Services.AddDbContext<GemAppDpContext>(option =>
             {
                 option.UseSqlServer(builder.Configuration.GetConnectionString("Defultconnection"));

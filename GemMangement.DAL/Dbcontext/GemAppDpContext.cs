@@ -23,7 +23,7 @@ namespace GemMangement.Pl.Dbcontext
         public DbSet<Member> members { get; set; }
         public DbSet<MemberShip> memberShips { get; set; }
         public DbSet<Session> sessions { get; set; }
-        public DbSet<Trainer> trainers { get; set; }
+        public DbSet<Trainers> trainers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

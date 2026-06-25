@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace GemMangement.DAL.Configration
 {
-    public  class TrainerConfigration:GemUserConfigration<Trainer>,IEntityTypeConfiguration<Trainer>
+    public  class TrainerConfigration:GemUserConfigration<Trainers>,IEntityTypeConfiguration<Trainers>
     {
-        public new void Configure(EntityTypeBuilder<Trainer> builder)
+        public new void Configure(EntityTypeBuilder<Trainers> builder)
         {
             builder.Property(s => s.CreatedAt).HasColumnName("HireDAte").HasDefaultValueSql("GETDATE()");
             base.Configure(builder);

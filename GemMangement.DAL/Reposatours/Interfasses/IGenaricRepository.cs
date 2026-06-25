@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace GemMangement.DAL.Reposatours.Interfasses
 {
-    public  interface IGenaricRepository<TEntity> where TEntity : BaseEntity, new()
+    public  interface IGenaricRepository<TEntity> where TEntity : BaseEntity
     {
         Task<IEnumerable<TEntity>> GetallAsync(bool tracking = false, CancellationToken ct = default);
         Task<TEntity?> GetByIdAsync(int id, CancellationToken ct = default);
-        Task<int> AddAsync(TEntity entity, CancellationToken ct = default);
+        void Add(TEntity entity);
 
-        Task<int> UpDateAsync(TEntity entity, CancellationToken ct = default);
-        Task<int> DeleteAsync(TEntity entity, CancellationToken ct = default);
+        void UpDatAsync(TEntity entity);
+        void Delete(TEntity entity);
         Task<bool> AnyAsync(Expression<Func<TEntity,bool>>predicate,CancellationToken ct);
         Task<TEntity?>Firstordefultacync(Expression<Func<TEntity, bool>> predicate, CancellationToken ct);
     }

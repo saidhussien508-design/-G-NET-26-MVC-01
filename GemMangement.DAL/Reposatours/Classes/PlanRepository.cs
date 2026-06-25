@@ -14,6 +14,7 @@ namespace GemMangement.DAL.Reposatours.Classes
     public class PlanRepository : IplanReposatory   
     {
         private readonly GemAppDpContext _Context;
+       
         public PlanRepository(GemAppDpContext gemAppDpContext)
         {
             _Context = gemAppDpContext;

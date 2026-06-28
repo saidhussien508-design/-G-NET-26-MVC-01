@@ -2,6 +2,7 @@
 using GemMangement.DAL.Reposatours.Interfasses;
 using GemMangement.Pl.Dbcontext;
 using Microsoft.EntityFrameworkCore;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,10 @@ namespace GemMangement.DAL.Reposatours.Classes
         {
             return await _context.bookings.CountAsync(s=>s.Sessionid == id);
         }
+
+      
+        public async Task<Session> GetSessionByIdWithTrainnerAndCategoryasync(int sessionid, CancellationToken ct)
+                => await _context.sessions.Include(s => s.Trainer).Include(s => s.Category).FirstOrDefaultAsync(s => s.Id == sessionid);
 
     }
 }

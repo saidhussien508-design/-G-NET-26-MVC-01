@@ -11,6 +11,7 @@ namespace GemMangement.DAL.Reposatours.Interfasses
     {
        Task<IEnumerable<Session>> GetAllSessionWithTrainnerAndCategoryAsync(CancellationToken ct);
         Task<int> GetCountBookedSloteAsync(int id, CancellationToken ct);
-    
+        Task<Session> GetSessionByIdWithTrainnerAndCategoryasync(int sessionid,CancellationToken ct);
+
     }
 }

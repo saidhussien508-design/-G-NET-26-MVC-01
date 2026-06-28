@@ -54,9 +54,12 @@ namespace GemMangement_AL_
        
         private void mabsession()
         {
+            CreateMap<Session, SessionViewModel>().ForMember(s=>s.TrainerName,o=>o.MapFrom(s=>s.Trainer.Name)).
+                ForMember(s=>s.CategoryName,o=>o.MapFrom(a=>a.Category.CaregoryNAme));
             CreateMap<CreateSessionViewModel, Session>();
             CreateMap<Trainers, TrainnerSelectViewModel>();
             CreateMap<Category, CategorySelectViewModel>();
+            CreateMap<Session,SessionToUpDateViewModel>();
         }
 
 

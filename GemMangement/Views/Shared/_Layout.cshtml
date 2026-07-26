@@ -36,16 +36,16 @@
                                    href="#">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" href="#">Members</a>
+                                <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page"asp-controller="member"asp-action="index">Members</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" href="#">Trainers</a>
+                                <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" asp-controller="trainers" asp-action="index" >Trainers</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" href="#">Sessions</a>
+                                <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" asp-controller="sessions" asp-action="index">Sessions</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" href="#">Plans</a>
+                                <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" asp-controller="plans" asp-action="index">Plans</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page"
@@ -58,7 +58,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <form href="\Account\Logout" method="post" class="d-inline">
+                                <form asp-action="Logout" asp-controller="Account" method="post" class="d-inline">
                                     <button type="submit"
                                             class="btn btn-link nav-link px-3 py-2 mx-2 fw-bolder fs-5 text-black-alternative">
                                         Logout
@@ -76,11 +76,8 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - GemMangement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    @await RenderSectionAsync("hamada", required:false)
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

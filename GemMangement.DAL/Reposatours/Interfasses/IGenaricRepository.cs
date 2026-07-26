@@ -1,0 +1,25 @@
+﻿using GemMangement.DAL.Models;
+using GemMangement.Models;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GemMangement.DAL.Reposatours.Interfasses
+{
+    public  interface IGenaricRepository<TEntity> where TEntity : BaseEntity
+    {
+        Task<IEnumerable<TEntity>> GetallAsync(bool tracking = false, CancellationToken ct = default);
+        Task<TEntity?> GetByIdAsync(int id, CancellationToken ct = default);
+        void Add(TEntity entity);
+
+        void UpDatAsync(TEntity entity);
+        void Delete(TEntity entity);
+        Task<bool> AnyAsync(Expression<Func<TEntity,bool>>predicate,CancellationToken ct);
+        Task<TEntity?>Firstordefultacync(Expression<Func<TEntity, bool>> predicate, CancellationToken ct);
+        Task<int> GetCountAsync(Expression<Func<TEntity, bool>>? predicate=null, CancellationToken ct=default);
+    }
+}

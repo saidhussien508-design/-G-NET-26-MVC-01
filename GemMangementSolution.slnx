@@ -1,3 +1,5 @@
 <Solution>
-  <Project Path="GemMangement/GemMangement.csproj" />
+  <Project Path="GemMangement(AL)/GemMangement.PLL.csproj" Id="3d7b79e1-879a-4e33-8f38-bbd2df3576a9" />
+  <Project Path="GemMangement.DAL/GemMangement.DAL.csproj" Id="43bafba3-eddc-460c-9e2c-4b7b3ff64813" />
+  <Project Path="GemMangement/GemMangement.Pl.csproj" />
 </Solution>

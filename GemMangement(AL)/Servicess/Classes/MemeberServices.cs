@@ -2,6 +2,7 @@
 using GemMangement.DAL;
 using GemMangement.DAL.Models;
 using GemMangement.DAL.Reposatours.Interfasses;
+using GemMangement_AL_.Servicess.Attasment;
 using GemMangement_AL_.Servicess.Interfases;
 using GemMangement_AL_.ViewModel.member;
 using System;
@@ -17,11 +18,13 @@ namespace GemMangement_AL_.Servicess.Classes
        
         private readonly IuniteOfWork _iuniteOfWork;
         private readonly IMapper _mapper;
+        private readonly Iattasmentservicess _iattasmentservicess;
 
-        public MemeberServices(IuniteOfWork iuniteOfWork,IMapper mapper)
+        public MemeberServices(IuniteOfWork iuniteOfWork,IMapper mapper,Iattasmentservicess iattasmentservicess)
         {
             _iuniteOfWork = iuniteOfWork;
            _mapper = mapper;
+           _iattasmentservicess = iattasmentservicess;
         }
         
         public async Task<IEnumerable<MemberViewModel>> GetAllMemberAsync(CancellationToken ct)
@@ -177,10 +180,21 @@ namespace GemMangement_AL_.Servicess.Classes
 
 
             //};
+
+          var filename= await _iattasmentservicess.UploadAsync(model.photofile.OpenReadStream(),"memberpictur",model.photofile.Name,ct);
+            if (string.IsNullOrWhiteSpace(filename)) return false;
+
           var creatmember= _mapper.Map<Member>(model);
+            creatmember.photo = filename;
             _iuniteOfWork.GetRepository<Member>().Add(creatmember);
             var count = await _iuniteOfWork.SaveChangeAsync(ct);
-            return count > 0;
+           if( count > 0)return true;
+            else
+            {
+                //delete
+                _iattasmentservicess.Delete("memberpictur", filename);
+                return false;
+            }
         }
 
         public async Task<bool> DeletmemberAsync(int MemberId, CancellationToken ct)
@@ -190,7 +204,12 @@ namespace GemMangement_AL_.Servicess.Classes
 
             var HasFutherSession=await _iuniteOfWork.GetRepository<Booking>().AnyAsync(s => s.Memberid == MemberId && s.Session.StartDate > DateTime.Now,ct);
             if (HasFutherSession) return false;
-
+            //مش متاكد من دي
+            if(member.photo is not null)
+            {
+                _iattasmentservicess.Delete("memberpictur", member.photo);
+            }
+            //
            _iuniteOfWork.GetRepository<Member>().Delete(member);
             var count=await _iuniteOfWork.SaveChangeAsync(ct);
             return count > 0;

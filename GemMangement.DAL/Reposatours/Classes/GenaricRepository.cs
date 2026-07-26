@@ -55,6 +55,11 @@ namespace GemMangement.DAL.Reposatours.Classes
         {
             return await _dpset.FirstOrDefaultAsync(predicate, ct);
         }
+
+        public async Task<int> GetCountAsync(Expression<Func<TEntity, bool>>? predicate = null, CancellationToken ct = default)
+        {
+            return predicate is not null ? await _Context.Set<TEntity>().CountAsync(predicate, ct) : await _Context.Set<TEntity>().CountAsync(ct);
+        }
     }
 
        

@@ -2,11 +2,13 @@
 using GemMangement.DAL.Reposatours.Interfasses;
 using GemMangement.Models;
 using GemMangement.Pl.Dbcontext;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GemMangement.Controllers
 {
+    [Authorize]
     public class PlansController:Controller
     {
         //private readonly GemAppDpContext _Context=new GemAppDpContext();

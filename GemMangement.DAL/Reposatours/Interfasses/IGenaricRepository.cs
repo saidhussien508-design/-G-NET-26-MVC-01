@@ -20,5 +20,6 @@ namespace GemMangement.DAL.Reposatours.Interfasses
         void Delete(TEntity entity);
         Task<bool> AnyAsync(Expression<Func<TEntity,bool>>predicate,CancellationToken ct);
         Task<TEntity?>Firstordefultacync(Expression<Func<TEntity, bool>> predicate, CancellationToken ct);
+        Task<int> GetCountAsync(Expression<Func<TEntity, bool>>? predicate=null, CancellationToken ct=default);
     }
 }

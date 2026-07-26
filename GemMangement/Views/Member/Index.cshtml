@@ -61,8 +61,16 @@
                                 <tr>
                                     <td>
                                         <span class="avatar">
-                                            <img src="~/images/@n.Photo" alt="Default Avatar" class="rounded-circle"
-                                                 style="width: 40px; height: 40px;" />
+                                            @if(n.Photo is  null)
+                                            {
+                                                <img src="~/images/about p2.jpg" alt="Default Avatar" class="rounded-circle"
+                                                     style="width: 40px; height: 40px;" />
+                                            }
+                                            else
+                                            {
+                                                <img src="@(Url.Action("picter", "member",new{id=n.id}))" class="rounded-circle"
+                                                     style="width: 40px; height: 40px;" />
+                                            }
                                         </span>
                                     </td>
                                     <td><span>@n.Name</span></td>

@@ -2,11 +2,13 @@
 using GemMangement_AL_.common;
 using GemMangement_AL_.Servicess.Interfases;
 using GemMangement_AL_.ViewModel.session;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GemMangement.Pl.Controllers
 {
+    [Authorize]
     public class SessionsController :Controller
     {
         private readonly IsessionServesises _isessionServesises;
@@ -24,8 +26,8 @@ namespace GemMangement.Pl.Controllers
         [HttpGet]
         public async Task<IActionResult> create(CancellationToken ct)
         {
-            ViewBag.Trainers = new SelectList(await _isessionServesises.GetAllTrainnerForDropDownAsync(ct),"id","name");
-            ViewBag.Categories = new SelectList(await _isessionServesises.GetAllCategoryForDropDownAsync(ct), "id", "CategoryName");
+            ViewBag.Trainers = new SelectList(await _isessionServesises.GetAllTrainnerForDropDownAsync(ct), "Id", "Name");
+            ViewBag.Categories = new SelectList(await _isessionServesises.GetAllCategoryForDropDownAsync(ct), "Id", "Name");
             return View();  
         }
         [HttpPost]
@@ -62,7 +64,7 @@ namespace GemMangement.Pl.Controllers
             var result = await _isessionServesises.GetSessionToUpDate(id, ct);
             if (result.susses)
             {
-                ViewBag.Trainers = new SelectList(await _isessionServesises.GetAllTrainnerForDropDownAsync(ct), "id", "name");
+                ViewBag.Trainers = new SelectList(await _isessionServesises.GetAllTrainnerForDropDownAsync(ct), "Id", "Name");
                 return View(result.Value);
             }
       
@@ -84,7 +86,7 @@ namespace GemMangement.Pl.Controllers
             }
             else
             {
-                ViewBag.Trainers = new SelectList(await _isessionServesises.GetAllTrainnerForDropDownAsync(ct), "id", "name");
+                ViewBag.Trainers = new SelectList(await _isessionServesises.GetAllTrainnerForDropDownAsync(ct), "Id", "Name");
                 TempData["Errormasege"] = result.error;
                 return View(model);
             }

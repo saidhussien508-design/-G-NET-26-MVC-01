@@ -1,17 +1,35 @@
 ﻿using GemMangement.DAL.Models;
+using GemMangement_AL_.Servicess.Attasment;
 using GemMangement_AL_.Servicess.Interfases;
 using GemMangement_AL_.ViewModel.member;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GemMangement.Pl.Controllers
 {
+    [Authorize]
     public class memberController:Controller
     {
         private readonly ImemberServises _memberservices;
+        private readonly Iattasmentservicess _iattasmentservicess;
 
-        public memberController(ImemberServises memberservices)
+        public memberController(ImemberServises memberservices,Iattasmentservicess iattasmentservicess)
         {
             _memberservices = memberservices;
+            _iattasmentservicess = iattasmentservicess;
+        }
+        [HttpGet]
+        public async Task<IActionResult> picter(int id,CancellationToken ct)
+        {
+           var member=await _memberservices.GetMemberDetails(id, ct);
+            if (member is null || string.IsNullOrWhiteSpace(member.Photo)) return null;
+            var res=_iattasmentservicess.GetFile("memberpictur", member.Photo);
+            if (res is null) return NotFound();
+            
+            return File(res.Value.strem, res.Value.contenttype);
+
+                
+                
         }
         public async Task< IActionResult> index(CancellationToken ct)
         {

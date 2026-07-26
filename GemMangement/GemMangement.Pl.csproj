@@ -16,4 +16,12 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\memberpictur\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
+  </ItemGroup>
+
 </Project>
